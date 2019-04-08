@@ -150,7 +150,7 @@ networks:
       driver: default
 ```
 
-Start Spark master and worker as per the configuration in the `docker-compose-yml` file.
+Start Spark master and worker as per the configuration in the `docker-compose.yml` file.
 
 ```
 docker-compose up
