@@ -88,7 +88,31 @@ spark-submit --master spark://spark-master:7077 --class org.apache.spark.example
 
 ##  Using docker-compose
  
-Let's skip running so many commands by using `docker-compose`. First, create a `docker-compose.yml` file with the content below
+Let's skip running so many commands by using `docker-compose`. 
+
+First, create a script `start-master.sh` with the content below
+
+```bash
+#!/bin/sh
+
+/usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master \
+    --ip $SPARK_LOCAL_IP \
+    --port $SPARK_MASTER_PORT \
+    --webui-port $SPARK_MASTER_WEBUI_PORT
+```
+
+Also, create a `start-worker.sh` one with the content below
+
+```bash
+#!/bin/sh
+
+/usr/local/spark/bin/spark-class org.apache.spark.deploy.worker.Worker \
+    --webui-port $SPARK_WORKER_WEBUI_PORT $SPARK_MASTER
+```
+
+*Note: Both scripts should have permissions as executable.*
+
+Now, create a `docker-compose.yml` file with the content below
 
 ```
 version: "3.3"
