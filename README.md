@@ -3,8 +3,8 @@
 TL;DR
 
 ```
-git clone awesome_repo
-cd awesome_repo
+git clone git@github.com:aljavier/spark-docker-setup.git
+cd spark-docker-setup
 docker build -t learning/spark:latest .      
 docker-compose up
 ```
