@@ -165,7 +165,36 @@ docker-compose up --scale spark-worker=3
 Command above run the whole thing with 3 Spark workers.
 
 
-Reference:
+## Troubleshooting
+
+#### 1. "no such file or directory" error on Windows
+
+After you ran
+```
+ docker-compose.exe up
+```
+
+If you get errors like below
+```
+Starting spark-master ... done
+Starting spark-docker-setup_spark-worker_1 ... done
+Attaching to spark-master, spark-docker-setup_spark-worker_1
+spark-master    | standard_init_linux.go:207: exec user process caused "no such file or directory"
+spark-worker_1  | standard_init_linux.go:207: exec user process caused "no such file or directory"
+spark-master exited with code 1
+spark-docker-setup_spark-worker_1 exited with code 1
+```
+
+You probably need to change the ending lines of files `start-master.sh` and `start-worker.sh` from `CRLF` to `LF`. You can use [dos2unix](https://sourceforge.net/projects/dos2unix/) for that
+
+```
+dos2unix.exe start-worker.sh
+dos2unix.exe start-master.sh
+```
+
+Or any other tool that allows you to change that, like [notepad++](https://stackoverflow.com/a/52665687).
+
+## Reference:
 
 - [A Journey Into Big Data with Apache Spark: Part 1](https://towardsdatascience.com/a-journey-into-big-data-with-apache-spark-part-1-5dfcc2bccdd2)
 
