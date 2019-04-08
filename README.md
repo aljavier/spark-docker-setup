@@ -156,6 +156,8 @@ Start Spark master and worker as per the configuration in the `docker-compose.ym
 docker-compose up
 ```
 
+Now you can go to Spark master UI at http://localhost:8080.
+
 Want to use more than one Spark worker? Then, run something like
 
 ```
