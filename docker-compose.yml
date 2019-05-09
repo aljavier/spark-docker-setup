@@ -9,14 +9,19 @@ services:
       - 6066:6066
       - 7077:7077
       - 8080:8080
+      - 8088:18080
     networks:
       - spark-network
     environment:
       - "SPARK_LOCAL_IP=spark-master"
       - "SPARK_MASTER_PORT=7077"
       - "SPARK_MASTER_WEBUI_PORT=8080"
+      - "SPARK_PUBLIC_DNS=localhost"
+      - "SPARK_CONF_DIR=/conf"
     volumes:
-      - ./spark-data:/opt/spark-data
+      - ./data:/opt/spark-data
+      - ./conf:/opt/spark-conf
+      - ./logs:/opt/spark-logs
     command: "/start-master.sh"
   spark-worker-1:
     build: .
@@ -32,10 +37,14 @@ services:
       - "SPARK_MASTER=spark://spark-master:7077"
       - "SPARK_WORKER_WEBUI_PORT=8080"
       - "SPARK-LOCAL_IP=spark-worker-2"
+      - "SPARK_PUBLIC_DNS=localhost"
       - "SPARK_WORKER_CORES=2"
       - "SPARK_WORKER_MEMORY=1g"
+      - "SPARK_CONF_DIR=/conf"
     volumes:
-      - ./spark-data:/spark-data
+      - ./data:/opt/spark-data
+      - ./conf:/opt/spark-conf
+      - ./logs:/opt/spark-logs
     command: "/start-worker.sh"
   spark-worker-2:
     build: .
@@ -51,10 +60,14 @@ services:
       - "SPARK_MASTER=spark://spark-master:7077"
       - "SPARK_WORKER_WEBUI_PORT=8080"
       - "SPARK-LOCAL_IP=spark-worker-2"
+      - "SPARK_PUBLIC_DNS=localhost"
       - "SPARK_WORKER_CORES=2"
       - "SPARK_WORKER_MEMORY=1g"
+      - "SPARK_CONF_DIR=/conf"
     volumes:
-      - ./spark-data:/spark-data
+      - ./data:/opt/spark-data
+      - ./conf:/opt/spark-conf
+      - ./logs:/opt/spark-logs
     command: "/start-worker.sh"
 networks:
   spark-network:
